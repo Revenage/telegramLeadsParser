@@ -33,5 +33,7 @@ node_modules
 Thumbs.db
 
 # Ignore built ts files
-dist/**/*
+# dist/**/*
 functions/**/*
+# Local Netlify folder
+.netlify
