@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --version && tsc && netlify-lambda build dist",
+    "build": "npx tsc && netlify-lambda build dist",
     "start": "./node_modules/.bin/netlify-lambda serve dist",
     "serve": "npm run build && npm run start",
     "dev": "nodemon -r dotenv/config src/server_local.ts"
