@@ -1,6 +1,6 @@
 {
   "name": "telegram_leads",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "telegram leads listener",
   "main": "index.js",
   "scripts": {
