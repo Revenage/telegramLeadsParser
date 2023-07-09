@@ -4,22 +4,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const baseAuth_1 = __importDefault(require("../middlewares/baseAuth"));
+const base_auth_1 = __importDefault(require("../middlewares/base_auth"));
 const router = (0, express_1.Router)();
-router.use(baseAuth_1.default);
+router.use(base_auth_1.default);
+const telegram_service_1 = __importDefault(require("../services/telegram_service"));
+const delay_1 = __importDefault(require("../helper/delay"));
 router.get("/", (req, res) => res.send(`
 <h2>Hello in Telegram leads parser App</h2>
 <br>
-<a href="/auth">Auth to your telegram</a>
-<hr>
-${process.env.TEST}
+${telegram_service_1.default.connected
+    ? "<span>You are connected</span>"
+    : '<a href="/auth">Auth to your telegram</a>'}
 `));
-router.get("/auth", (req, res) => res.send(`
+router.get("/auth", (req, res) => {
+    telegram_service_1.default.auth().then(async (client) => {
+        await telegram_service_1.default.listen(client);
+    });
+    res.send(`
 <form action="/phone" method="post">
 <label for="phone">Enter a phone number:</label><br><br>
   <input type="tel" id="phone" name="phone" placeholder="0XXXXXXXXX" pattern="[0-9]{10}" required><br><br>
   <input type="submit" value="OK">
-</form>`));
+</form>`);
+});
 router.get("/code", (req, res) => res.send(`
 <form action="/code" method="post">
 <label for="code">Enter code from telegram:</label><br><br>
@@ -28,10 +35,13 @@ router.get("/code", (req, res) => res.send(`
 </form>`));
 router.post("/phone", (req, res) => {
     console.log("%j", "phone", req.body.phone);
+    telegram_service_1.default.setPhoneNumber(req.body.phone);
     res.redirect("/code");
 });
-router.post("/code", (req, res) => {
+router.post("/code", async (req, res) => {
     console.log("%j", "code", req.body.code);
+    telegram_service_1.default.setPhoneCode(req.body.code);
+    await (0, delay_1.default)(1000);
     res.redirect("/");
 });
 exports.default = router;

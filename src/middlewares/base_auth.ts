@@ -10,7 +10,10 @@ function baseAuth(req: Request, res: Response, next: NextFunction) {
     authorization = String(authorization).replace("Basic ", "");
     const [username, password] = decodeBase64(authorization).split(":");
 
-    if (username == "admin" && password == "password") {
+    if (
+      username == process.env.AUTH_USERNAME &&
+      password == process.env.AUTH_PASSWORD
+    ) {
       return next();
     }
   }

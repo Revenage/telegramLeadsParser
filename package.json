@@ -11,7 +11,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build"
+      "pre-commit": "tsc"
     }
   },
   "nodemonConfig": {
@@ -34,7 +34,6 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "input": "^1.0.1",
     "netlify-lambda": "^2.0.16",
     "node-cache": "^5.1.2",
     "random-bigint": "^0.0.1",
