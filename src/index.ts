@@ -2,6 +2,10 @@ import express, { Router } from "express";
 import baseAuth from "./middlewares/baseAuth";
 import bodyParser from "body-parser";
 
+console.log("%j", 'ENV', {
+    NODE_ENV: process.env.NODE_ENV
+    TEST: process.env.TEST
+})
 // const router = Router();
 const app = express();
 
