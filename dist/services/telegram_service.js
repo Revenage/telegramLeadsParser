@@ -22,7 +22,7 @@ class TelegramService {
                 connectionRetries: 5,
             });
             await client.start({
-                phoneNumber: async () => await this.waitInputPhoneNumber(),
+                phoneNumber: async () => await this.phoneNumber,
                 phoneCode: async () => await this.waitInputPhoneCode(),
                 onError: (err) => console.log(err),
             });
@@ -32,13 +32,13 @@ class TelegramService {
             this.connected = true;
             return client;
         };
-        this.waitInputPhoneNumber = async () => {
-            if (this.phoneNumber) {
-                return this.phoneNumber;
-            }
-            await (0, delay_1.default)(300);
-            return await this.waitInputPhoneNumber();
-        };
+        // public waitInputPhoneNumber = async () => {
+        //   if (this.phoneNumber) {
+        //     return this.phoneNumber;
+        //   }
+        //   await delay(300);
+        //   return await this.waitInputPhoneNumber();
+        // };
         this.waitInputPhoneCode = async () => {
             if (this.phoneCode) {
                 return this.phoneCode;
@@ -46,9 +46,9 @@ class TelegramService {
             await (0, delay_1.default)(300);
             return await this.waitInputPhoneCode();
         };
-        this.setPhoneNumber = (value) => {
-            this.phoneNumber = `${config_1.default.COUNTRY_PHONE_CODE}${value}`;
-        };
+        // public setPhoneNumber = (value: string) => {
+        //   this.phoneNumber = `${config.COUNTRY_PHONE_CODE}${value}`;
+        // };
         this.setPhoneCode = (value) => {
             this.phoneCode = value;
         };
@@ -105,7 +105,7 @@ class TelegramService {
         this.apiId = config_1.default.API_ID;
         this.apiHash = config_1.default.API_HASH;
         this.tgSession = "";
-        this.phoneNumber = "";
+        this.phoneNumber = config_1.default.PHONE_NUMBER;
         this.phoneCode = "";
         this.connected = false;
     }
