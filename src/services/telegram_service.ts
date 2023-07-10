@@ -87,12 +87,10 @@ class TelegramService {
 
       if (!msgObject) return;
       if (!msgObject.message) return;
+      const cacheKey = "sended_msg_" + msgObject.id;
+      if (cache.get(cacheKey)) return;
 
       console.log("%j", "MSG:", msgObject.message.substring(0, 27) + "...");
-
-      const cacheKey = "sended_msg_" + msgObject.id;
-
-      if (cache.get(cacheKey)) return;
 
       const r = new RegExp(config.LEADS.join("|"), "gmi");
       const hasLeads = r.test(msgObject.message);
