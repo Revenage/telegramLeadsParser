@@ -4,12 +4,14 @@
   "description": "telegram leads listener",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/server.js",
     "build": "tsc",
+    "serve": "npm run build && npm run start",
     "dev": "nodemon -r dotenv/config src/server_local.ts"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build"
+      "pre-push": "npm run build"
     }
   },
   "nodemonConfig": {

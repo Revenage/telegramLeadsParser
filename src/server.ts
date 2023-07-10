@@ -1,6 +1,5 @@
 import express from "express";
 import bodyParser from "body-parser";
-import serverless from "serverless-http";
 
 import router from "./router";
 
@@ -13,8 +12,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/", router);
-app.use("/.netlify/functions/server", router);
 
-export const handler = serverless(app);
+app.listen(process.env.PORT || 3000, () => console.log("server listen", 3000));
 
 export default app;
