@@ -7,7 +7,7 @@
     "start": "node dist/server.js",
     "build": "tsc",
     "serve": "npm run build && npm run start",
-    "dev": "nodemon -r dotenv/config src/server_local.ts"
+    "dev": "nodemon -r dotenv/config src/server.ts"
   },
   "husky": {
     "hooks": {

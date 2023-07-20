@@ -42,14 +42,16 @@ class TelegramService {
       phoneCode: async () => await this.waitInputPhoneCode(),
       onError: (err) => console.log(err),
     });
-    console.log("You should now be connected.");
     const successSession = client.session.save();
+    console.log("You should now be connected.");
+    await this.sendMsg(`Lead parser connected to telegram ${config.USERNAME}!`);
     this.tgSession = String(successSession);
     this.connected = true;
+    this.client = client;
     return client;
   };
 
-  public waitInputPhoneNumber = async () => {
+  public waitInputPhoneNumber = async (): Promise<string> => {
     if (this.phoneNumber) {
       return this.phoneNumber;
     }
@@ -66,11 +68,23 @@ class TelegramService {
   };
 
   public setPhoneNumber = (value: string) => {
-    this.phoneNumber = `${config.COUNTRY_PHONE_CODE}${value}`;
+    this.phoneNumber = value;
   };
 
   public setPhoneCode = (value: string) => {
     this.phoneCode = value;
+  };
+
+  public sendMsg = async (message: string) => {
+    if (!this.client) return;
+    return await this.client.invoke(
+      new Api.messages.SendMessage({
+        peer: config.USERNAME,
+        message,
+        randomId: random(128),
+        noWebpage: false,
+      })
+    );
   };
 
   public listen = async (client: TelegramClient) => {
@@ -124,14 +138,7 @@ class TelegramService {
 
       if (!result) return;
 
-      const sendMessagesResult = await client.invoke(
-        new Api.messages.SendMessage({
-          peer: config.USERNAME,
-          message: result.link,
-          randomId: random(128),
-          noWebpage: false,
-        })
-      );
+      await this.sendMsg(result.link);
 
       cache.set(cacheKey, msgObject.id);
     });
