@@ -28,7 +28,7 @@ router.get("/auth", (req, res) => {
   res.send(`
 <form action="/phone" method="post">
 <label for="phone">Enter a phone number:</label><br><br>
-  <input type="tel" id="phone" name="phone" placeholder="0XXXXXXXXX" pattern="[0-9]{10}" required><br><br>
+  <input type="tel" id="phone" name="phone" placeholder="XXXXXXXXXXXX" pattern="[0-9]{12}" required><br><br>
   <input type="submit" value="OK">
 </form>`);
 });

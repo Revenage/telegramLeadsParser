@@ -5,7 +5,6 @@ import router from "./router";
 
 console.log("%j", "ENV", {
   NODE_ENV: process.env.NODE_ENV,
-  TEST: process.env.TEST,
 });
 
 const app = express();
