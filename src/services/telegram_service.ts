@@ -44,10 +44,14 @@ class TelegramService {
     });
     const successSession = client.session.save();
     console.log("You should now be connected.");
-    await this.sendMsg(`Lead parser connected to telegram ${config.USERNAME}!`);
     this.tgSession = String(successSession);
     this.connected = true;
     this.client = client;
+    setTimeout(
+      () =>
+        this.sendMsg(`Lead parser connected to telegram ${config.USERNAME}!`),
+      3000
+    );
     return client;
   };
 
