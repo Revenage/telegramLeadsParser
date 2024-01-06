@@ -37,10 +37,14 @@ class TelegramService {
     const client = new TelegramClient(stringSession, this.apiId, this.apiHash, {
       connectionRetries: 5,
     });
+
     await client.start({
       phoneNumber: async () => await this.waitInputPhoneNumber(),
       phoneCode: async () => await this.waitInputPhoneCode(),
-      onError: (err) => console.log(err),
+      onError: (err) => {
+        console.log("%j", "client.start error", err);
+        process.exit(0);
+      },
     });
     const successSession = client.session.save();
     console.log("You should now be connected.");
