@@ -29,6 +29,15 @@ class TelegramService {
     this.phoneNumber = "";
     this.phoneCode = "";
     this.connected = false;
+
+    setInterval(() => {
+      const hour = new Date().getHours();
+      if (hour === 13) {
+        const msg = `Service OK: ${new Date().toUTCString()}`;
+        console.log("%j", "MSG:", msg);
+        this.sendMsg(msg);
+      }
+    }, 3600_000);
   }
 
   public auth = async () => {
